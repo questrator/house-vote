@@ -12,17 +12,22 @@
         <?php
             $query = mysqli_query($connect, "SELECT * FROM `houses`");
             $houses = mysqli_fetch_all($query);
-            foreach($houses as $key => $value) {
+            for ($i = 0; $i < count($houses); $i++) {
         ?>
 
         <div>
-            <span><?= "$value[0]" ?></span>
-            <span><?= "$value[1]" ?></span>
-            <span><a href="update.php?id_house=<?= $value[0] ?>">ред</a></span>
+            <span><?= $houses[$i][0] ?></span>
+            <span><?= $houses[$i][1] ?></span>
+            <span><a href="update.php?id_house=<?= $houses[$i][0] ?>">ред</a></span>
         </div>
 
         <?php
             }
+
+            $a = "f";
+            echo "<pre>";
+            echo $a * "f";
+            echo "</pre>";
         ?>
         <form action="create.php" method="post">
             <input type="text" name="address" placeholder="адрес" required>
