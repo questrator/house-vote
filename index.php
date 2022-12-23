@@ -5,34 +5,41 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Голосование</title>
+    <title>Bitrix export</title>
 </head>
 <body>
     <div>
         <?php
-            $query = mysqli_query($connect, "SELECT * FROM `houses`");
-            $houses = mysqli_fetch_all($query);
-            for ($i = 0; $i < count($houses); $i++) {
-        ?>
-
-        <div>
-            <span><?= $houses[$i][0] ?></span>
-            <span><?= $houses[$i][1] ?></span>
-            <span><a href="update.php?id_house=<?= $houses[$i][0] ?>">ред</a></span>
-        </div>
-
-        <?php
+            $query = mysqli_query($connect, "SELECT `DETAIL_TEXT` FROM `b_iblock_element` WHERE (`IBLOCK_ID` = 6 AND `DETAIL_TEXT` != '' AND `ACTIVE` = 'Y');");
+            $tables = mysqli_fetch_all($query);
+            for ($i = 0; $i < count($tables); $i++) {
+                echo $tables[$i][0];
             }
-
-            $a = "f";
-            echo "<pre>";
-            echo $a * "f";
-            echo "</pre>";
         ?>
-        <form action="create.php" method="post">
-            <input type="text" name="address" placeholder="адрес" required>
-            <input type="submit" value="Добавить">
-        </form>
+        
     </div>
+
+    <script>
+    const tables = document.querySelectorAll("table");
+    const data = [];
+    tables.forEach((table, id) => {
+        const city = table.querySelector(".price-city")?.textContent.split(" ").pop();
+        const type = table.querySelector(".price-type")?.textContent;
+        const date = table.querySelector(".price-date")?.textContent.split(" ").shift();
+        const headers = Array.from(table.querySelectorAll("th")).map(th => th.textContent);
+        const rows = table.querySelector("tbody").querySelectorAll("tr");
+        const pricelist = [];
+        rows.forEach((row) => {
+            const item = {};
+            const values = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().replace(/\s{2,}/gi, " "));
+            values[values.length - 1] = parseInt(values[values.length - 1].replace(/\s/, ""));
+            headers.forEach((header, i) => item[header] = values[i]);
+            pricelist.push(item);
+        });
+        data[id] = {city, type, date, pricelist,};
+    });
+    console.log(data);
+</script>
+
 </body>
 </html>
