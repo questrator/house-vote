@@ -18,7 +18,7 @@
         ?>
         
     </div>
-
+    
     <script>
     const tables = document.querySelectorAll("table");
     const data = [];
