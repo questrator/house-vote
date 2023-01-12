@@ -34,12 +34,26 @@
             const values = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().replace(/\s{2,}/gi, " "));
             values[values.length - 1] = parseInt(values[values.length - 1].replace(/\s/, ""));
             headers.forEach((header, i) => item[header] = values[i]);
-            pricelist.push(item);
+            if (values.length > 1) pricelist.push(item);
         });
         data[id] = {city, type, date, pricelist,};
     });
     console.log(data);
-</script>
+
+    function getServices(data) {
+        const services = new Set();
+        for (let item of data) {
+            for (let price of item.pricelist) {
+                const name = Object.keys(price).filter(e => e.includes("имен"))[0];
+                services.add(price[name]);
+            }
+        }
+        
+        console.log(Array.from(services).sort());
+    }
+    getServices(data);
+
+    </script>
 
 </body>
 </html>
