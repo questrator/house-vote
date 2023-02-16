@@ -5,19 +5,34 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Bitrix export</title>
+    <title>Помещения <?= "ff"?></title>
 </head>
 <body>
-    <div>
+    <div>Помещения</div>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>номер</th>
+            <th>тип</th>
+            <th>площадь, кв. м</th>
+        </thead>
+        <tbody>
         <?php
-            $query = mysqli_query($connect, "SELECT `DETAIL_TEXT` FROM `b_iblock_element` WHERE (`IBLOCK_ID` = 6 AND `DETAIL_TEXT` != '' AND `ACTIVE` = 'Y');");
+            $query = mysqli_query($connect, "SELECT * FROM `units`");
             $tables = mysqli_fetch_all($query);
             for ($i = 0; $i < count($tables); $i++) {
-                echo $tables[$i][0];
-            }
+                ?>
+                <tr>
+                    <td><?= $tables[$i][0]; ?></td>
+                    <td><?= $tables[$i][1]; ?></td>
+                    <td><?= $tables[$i][2]; ?></td>
+                    <td><?= $tables[$i][3]; ?></td>
+                </tr>
+                <?
+            }            
         ?>
-        
-    </div>
+        </tbody>
+    </table>
     
     <script>
     const tables = document.querySelectorAll("table");
