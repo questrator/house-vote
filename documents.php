@@ -34,7 +34,7 @@
             ON owners.owner_id = documents.owner_id
             INNER JOIN unit_types
             ON unit_types.unit_type_id = units.type_id
-            WHERE owners.owner_id = 1
+            WHERE documents.unit_id = 112
             ");
             $tables = mysqli_fetch_all($query);
             ?><pre><?php  ?></pre><?php
