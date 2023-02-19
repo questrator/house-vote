@@ -1,0 +1,27 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.units-table {
+    border: 1px dashed rgb(121, 121, 121);
+    background-color: rgb(255, 255, 255);
+}
+
+.units-table th {
+    padding: 10px 20px;
+    background-color: rgb(47, 113, 146);
+    color:rgb(255, 255, 255);
+}
+
+.units-table tr:nth-child(2n) {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.unit-id {
+    color: rgb(151, 151, 151);
+    max-width: 40px;
+}
+
+.align-center {
+    text-align: center;
+}
