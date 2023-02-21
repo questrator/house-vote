@@ -11,36 +11,52 @@
 </head>
 <body>
     <table class="units-table">
-        <caption>Помещения</caption>
+        <caption>Документы</caption>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
-                <th>пароль</th>
-                <th>паспорт</th>
-                <th>телефон</th>
-                <th>активность</th>
-                <th>информация</th>
+                <th>дркумент</th>
+                <th>дата</th>
+                <th>ФИО</th>
+                <th>помещение</th>
+                <th>номер</th>
+                <th>доля</th>
+                <th>площадь</th>
+                <th>очередь</th>
+                <th>подъезд</th>
+                <th>этаж</th>
             </tr>
         </thead>
         <tbody>
         <?php
-            $query = mysqli_query($connect, "SELECT * FROM documents
+            $query = mysqli_query($connect, "SELECT
+            documents.document_id,
+            documents.title,
+            documents.date,
+            owners.lastname,
+            owners.name,
+            owners.midname,
+            unit_types.description,
+            units.number,
+            documents.fraction,
+            units.area,
+            units.building,
+            units.entrance,
+            units.floor,
+            documents.activity
+            FROM documents
             LEFT JOIN units
             ON units.unit_id = documents.unit_id
             LEFT JOIN owners
             ON owners.owner_id = documents.owner_id
             INNER JOIN unit_types
             ON unit_types.unit_type_id = units.type_id
-            WHERE documents.unit_id = 112
+            WHERE documents.activity = 1
             ");
-            $tables = mysqli_fetch_all($query);
-            ?><pre><?php  ?></pre><?php
+            $tables = mysqli_fetch_all($query);            
             $json = [];
             for ($i = 0; $i < count($tables); $i++) {
-                $unit = [$tables[$i][0], $tables[$i][1], $tables[$i][2], $tables[$i][3], $tables[$i][4], $tables[$i][5], $tables[$i][6], $tables[$i][7], $tables[$i][8], $tables[$i][9], $tables[$i][10], $tables[$i][11], $tables[$i][12], $tables[$i][13], $tables[$i][14], $tables[$i][15], $tables[$i][16], $tables[$i][17], $tables[$i][18], $tables[$i][19], $tables[$i][20], $tables[$i][21], $tables[$i][22], $tables[$i][23], $tables[$i][24]];
+                $unit = [$tables[$i][0], $tables[$i][1], $tables[$i][2], $tables[$i][3], $tables[$i][4], $tables[$i][5], $tables[$i][6], $tables[$i][7], $tables[$i][8], $tables[$i][9], $tables[$i][10], $tables[$i][11], $tables[$i][12], $tables[$i][13], $tables[$i][14], $tables[$i][15], $tables[$i][16], $tables[$i][17], $tables[$i][18], $tables[$i][19], $tables[$i][20], $tables[$i][21], $tables[$i][22], $tables[$i][23], $tables[$i][24], $tables[$i][25]];
                 array_push($json, $unit);
                 // $s += $tables[$i][3];
                 ?>
@@ -48,12 +64,14 @@
                     <td class="owner-id"><?= $tables[$i][0]; ?></td>
                     <td class="owner-lastname"><?= $tables[$i][1]; ?></td>
                     <td class="owner-name"><?= $tables[$i][2]; ?></td>
-                    <td class="owner-midname"><?= $tables[$i][3]; ?></td>
-                    <td class="owner-password"><?= $tables[$i][4]; ?></td>
-                    <td class="owner-passport"><?= $tables[$i][5]; ?></td>
+                    <td class="owner-midname"><a href="/owners.php?owner=<?= $tables[$i][7]; ?>"><?= $tables[$i][3] . " " . $tables[$i][4] . " " . $tables[$i][5]; ?></a></td>
                     <td class="owner-phone"><?= $tables[$i][6]; ?></td>
-                    <td class="owner-activity"><?= $tables[$i][7]; ?></td>
-                    <td class="owner-info"><a href="/owner.php?unit=<?= $tables[$i][0]; ?>">инфо</a></td>
+                    <td class="owner-activity"><a href="/units.php?unit=<?= $tables[$i][7]; ?>"><?= $tables[$i][7] ?></a></td>
+                    <td class="owner-activity"><?= $tables[$i][8]; ?></td>
+                    <td class="owner-activity"><?= $tables[$i][9]; ?></td>
+                    <td class="owner-activity"><?= $tables[$i][10]; ?></td>
+                    <td class="owner-activity"><?= $tables[$i][11]; ?></td>
+                    <td class="owner-activity"><?= $tables[$i][12]; ?></td>
                 </tr>
                 <?
             }
